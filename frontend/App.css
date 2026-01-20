@@ -1,0 +1,19 @@
+/* Hide scrollbar for elements with the invisible-scroller class */
+.invisible-scroller {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+.invisible-scroller::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/Webkit */
+}
+/* Hide default eye/reveal icon in password fields for web browsers */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
+input[type="password"]::-webkit-credentials-auto-fill-button {
+  display: none !important;
+}
+input[type="password"]::-webkit-input-decoration-container {
+  display: none !important;
+} 
