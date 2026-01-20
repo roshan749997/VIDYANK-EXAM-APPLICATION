@@ -11,6 +11,7 @@ import FeaturesSection from './FeaturesSection';
 import VidyankAppDownload from './VidyankAppDownload';
 import IndexFooter from './IndexFooter';
 import HeroSection from './HeroSection';
+import StatisticsSection from './StatisticsSection';
 
 const HEADER_BG = '#282FFB1A';
 const BLUE = '#282FFB';
@@ -89,6 +90,7 @@ const IndexScreen = () => (
       <ExamCategories />
       <WhyChooseVidyank />
       <FeaturesSection />
+      <StatisticsSection />
       <VidyankAppDownload />
       <TestimonialsSection />
       <View style={{ height: 32, backgroundColor: '#fff' }} />
