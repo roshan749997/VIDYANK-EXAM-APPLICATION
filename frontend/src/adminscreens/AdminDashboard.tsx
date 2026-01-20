@@ -1,11 +1,11 @@
 import React from 'react';
 import { ScrollView, View, useWindowDimensions } from 'react-native';
-import AdminLayout from '../components/AdminLayout';
-import AdminFeatureCards from '../components/AdminFeatureCards';
-import AdminDashboardChart from '../components/AdminDashboardChart';
-import AdminDashboardChart2 from '../components/AdminDashboardChart2';
-import AdminStudentPerformanceMetrics from '../components/AdminStudentPerformanceMetrics';
-import AdminExamTestData from '../components/AdminExamTestData';
+import AdminLayout from './AdminLayout';
+import AdminFeatureCards from './AdminFeatureCards';
+import AdminDashboardChart from './AdminDashboardChart';
+import AdminDashboardChart2 from './AdminDashboardChart2';
+import AdminStudentPerformanceMetrics from './AdminStudentPerformanceMetrics';
+import AdminExamTestData from './AdminExamTestData';
 
 const AdminDashboard = () => {
   const { width } = useWindowDimensions();

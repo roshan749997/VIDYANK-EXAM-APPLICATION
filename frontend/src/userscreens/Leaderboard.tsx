@@ -3,15 +3,15 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity, Dimensions, ScrollV
 import GlassCard from '../components/GlassCard';
 import { colors } from '../theme';
 import GlassSidebar from '../components/GlassSidebar';
-import DashboardHeader from '../components/DashboardHeader';
+import DashboardHeader from './DashboardHeader';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useState, useEffect } from 'react';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
-import BlankHeader from '../components/BlankHeader';
-import { getUserSidebarItems } from '../components/userSidebarItems';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import BlankHeader from './BlankHeader';
+import { getUserSidebarItems } from './userSidebarItems';
+import UserDashboardLayout from './UserDashboardLayout';
 import { useUser } from '../context/UserContext';
 import api from '../services/api';
 

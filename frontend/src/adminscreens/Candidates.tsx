@@ -15,8 +15,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import { useNavigation } from '@react-navigation/native';
-import AdminLayout from '../components/AdminLayout';
-import AddCandidateModal from '../components/AddCandidateModal';
+import AdminLayout from './AdminLayout';
+import AddCandidateModal from './AddCandidateModal';
 import api from '../services/api';
 
 // Utility function for formatting date

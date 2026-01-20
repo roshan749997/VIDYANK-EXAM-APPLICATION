@@ -8,7 +8,7 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome5, Feather } from '@expo/v
 import { colors, spacing, borderRadius, typography, shadows } from '../theme';
 import GlassSidebar from '../components/GlassSidebar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import BlankHeader from '../components/BlankHeader';
+import BlankHeader from './BlankHeader';
 import { getUserSidebarItems } from './userSidebarItems';
 import UserDashboardLayout from './UserDashboardLayout';
 import { useUser } from '../context/UserContext';

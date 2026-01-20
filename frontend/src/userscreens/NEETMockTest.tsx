@@ -16,7 +16,7 @@ import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import { useProctoring } from '../utils/useProctoring';
-import { ProctoringModal } from '../components/ProctoringModal';
+import { ProctoringModal } from './ProctoringModal';
 
 const { width, height } = Dimensions.get('window');
 

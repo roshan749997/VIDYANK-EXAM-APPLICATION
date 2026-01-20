@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import UserDashboardLayout from './UserDashboardLayout';
 
 const initialNotifications = [
   {

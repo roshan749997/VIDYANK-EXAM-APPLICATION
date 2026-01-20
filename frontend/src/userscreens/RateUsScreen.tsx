@@ -16,7 +16,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import UserDashboardLayout from './UserDashboardLayout';
 
 // Get initial screen dimensions
 const { width: initialScreenWidth, height: initialScreenHeight } = Dimensions.get('window');

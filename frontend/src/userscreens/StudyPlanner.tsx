@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Modal, ScrollView, StyleSheet, useWindowDimensions, Platform, Image, Dimensions } from 'react-native';
 import GlassCard from '../components/GlassCard';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import UserDashboardLayout from './UserDashboardLayout';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 export default function StudyPlanner() {

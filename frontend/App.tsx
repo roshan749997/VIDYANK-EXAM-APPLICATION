@@ -1,28 +1,25 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState, useEffect } from 'react';
-import RegisterScreen from './src/screens/RegisterScreen';
-import SignInScreen from './src/screens/SignInScreen';
-import newdashboard from './src/screens/NewDashboard';
-import VidyankaTestSeries from './src/screens/VidyankaTestSeries';
-import Notifications from './src/screens/Notifications';
-import ExamHistory from './src/screens/ExamHistory';
-import StudyPlanner from './src/screens/StudyPlanner';
-import Leaderboard from './src/screens/Leaderboard';
-import Settings from './src/screens/Settings';
-import Progress from './src/screens/Progress';
-import ExamScreen from './src/screens/ExamScreen';
-import NEETMockTest from './src/screens/NEETMockTest';
-import UPSCMockTest from './src/screens/UPSCMockTest';
-import MPSCMockTest from './src/screens/MPSCMockTest';
-import IndexScreen from './src/screens/IndexScreen';
-import AvailableExams from './src/screens/AvailableExams';
-import AvailableExamsNew from './src/screens/AvailableExamsNew';
-import TakeExam from './src/screens/TakeExam';
-import PerformanceOverview from './src/screens/PerformanceOverview';
-import RateUsScreen from './src/screens/RateUsScreen';
-import StartYourJourney from './src/screens/StartYourJourney';
-import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import RegisterScreen from './src/userscreens/RegisterScreen';
+import SignInScreen from './src/userscreens/SignInScreen';
+import newdashboard from './src/userscreens/NewDashboard';
+import VidyankaTestSeries from './src/userscreens/VidyankaTestSeries';
+import Notifications from './src/userscreens/Notifications';
+import ExamHistory from './src/userscreens/ExamHistory';
+import StudyPlanner from './src/userscreens/StudyPlanner';
+import Leaderboard from './src/userscreens/Leaderboard';
+import Settings from './src/userscreens/Settings';
+import Progress from './src/userscreens/Progress';
+import NEETMockTest from './src/userscreens/NEETMockTest';
+import UPSCMockTest from './src/userscreens/UPSCMockTest';
+import MPSCMockTest from './src/userscreens/MPSCMockTest';
+import IndexScreen from './src/userscreens/IndexScreen';
+import AvailableExams from './src/userscreens/AvailableExams';
+import TakeExam from './src/userscreens/TakeExam';
+import PerformanceOverview from './src/userscreens/PerformanceOverview';
+import RateUsScreen from './src/userscreens/RateUsScreen';
+import ForgotPasswordScreen from './src/userscreens/ForgotPasswordScreen';
 // Admin screens imports
 import AdminDashboard from './src/adminscreens/AdminDashboard';
 import Candidates from './src/adminscreens/Candidates';
@@ -49,16 +46,13 @@ export type RootStackParamList = {
   Leaderboard: undefined;
   Settings: undefined;
   Progress: undefined;
-  ExamScreen: { examType: 'UPSC' | 'MPSC', questions: any[] };
   NEETMockTest: undefined;
   UPSCMockTest: undefined;
   MPSCMockTest: undefined;
   AvailableExams: undefined;
-  AvailableExamsNew: undefined;
   TakeExam: { examId: string };
   PerformanceOverview: undefined;
   RateUsScreen: undefined;
-  StartYourJourney: undefined;
   // Admin routes
   AdminDashboard: undefined;
   Exams: undefined;
@@ -134,16 +128,13 @@ export default function App() {
             <Stack.Screen name="Leaderboard" component={Leaderboard} options={{ headerShown: false }} />
             <Stack.Screen name="Settings" component={Settings} options={{ headerShown: false }} />
             <Stack.Screen name="Progress" component={Progress} options={{ headerShown: false }} />
-            <Stack.Screen name="ExamScreen" component={ExamScreen} options={{ headerShown: false }} />
             <Stack.Screen name="NEETMockTest" component={NEETMockTest} options={{ headerShown: false }} />
             <Stack.Screen name="UPSCMockTest" component={UPSCMockTest} options={{ headerShown: false }} />
             <Stack.Screen name="MPSCMockTest" component={MPSCMockTest} options={{ headerShown: false }} />
             <Stack.Screen name="AvailableExams" component={AvailableExams} options={{ headerShown: false }} />
-            <Stack.Screen name="AvailableExamsNew" component={AvailableExamsNew} options={{ headerShown: false }} />
             <Stack.Screen name="TakeExam" component={TakeExam} options={{ headerShown: false }} />
             <Stack.Screen name="PerformanceOverview" component={PerformanceOverview} options={{ headerShown: false }} />
             <Stack.Screen name="RateUsScreen" component={RateUsScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="StartYourJourney" component={StartYourJourney} options={{ headerShown: false }} />
             {/* Admin screens */}
             <Stack.Screen
               name="AdminDashboard"

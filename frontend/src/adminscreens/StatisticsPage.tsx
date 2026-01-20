@@ -15,7 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { getAllExams, getAllCandidates, getExamStatistics } from '../utils/multiTenantUtils';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { BackHandler } from 'react-native';
-import AdminLayout from '../components/AdminLayout';
+import AdminLayout from './AdminLayout';
 
 const { width } = Dimensions.get('window');
 

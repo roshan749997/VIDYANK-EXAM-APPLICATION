@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, useWindowDimensions, ScrollView } from 'react-native';
-import AdminLayout from '../components/AdminLayout';
+import AdminLayout from './AdminLayout';
 
 const settingsOptions = [
   { label: 'Monitor Your Exams', icon: require('../../assets/icons/ASetting1.png') },

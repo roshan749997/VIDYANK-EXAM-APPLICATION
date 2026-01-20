@@ -1,7 +1,7 @@
 import React, { useRef, useState, ReactNode } from 'react';
 import { View, StyleSheet, useWindowDimensions, Modal, TouchableOpacity, SafeAreaView, Platform, StatusBar, Image } from 'react-native';
-import GlassSidebar from './GlassSidebar';
-import DashboardHeader from './DashboardHeader';
+import GlassSidebar from '../components/GlassSidebar';
+import DashboardHeader from '../userscreens/DashboardHeader';
 import { useNavigation, useRoute, NavigationProp, RouteProp } from '@react-navigation/native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';

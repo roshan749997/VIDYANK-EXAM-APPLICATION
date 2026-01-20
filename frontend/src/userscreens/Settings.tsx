@@ -26,10 +26,10 @@ import GlassSidebar from '../components/GlassSidebar';
 import GlassInput from '../components/GlassInput';
 import { colors } from '../theme';
 import * as Clipboard from 'expo-clipboard';
-import DashboardHeader from '../components/DashboardHeader';
-import BlankHeader from '../components/BlankHeader';
-import { getUserSidebarItems } from '../components/userSidebarItems';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import DashboardHeader from './DashboardHeader';
+import BlankHeader from './BlankHeader';
+import { getUserSidebarItems } from './userSidebarItems';
+import UserDashboardLayout from './UserDashboardLayout';
 import api from '../services/api';
 
 const { width } = Dimensions.get('window');

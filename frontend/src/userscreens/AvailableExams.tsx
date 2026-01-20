@@ -6,10 +6,10 @@ import GlassButton from '../components/GlassButton';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors, spacing, borderRadius, typography, shadows } from '../theme';
 import GlassSidebar from '../components/GlassSidebar';
-import DashboardHeader from '../components/DashboardHeader';
-import BlankHeader from '../components/BlankHeader';
-import UserDashboardLayout from '../components/UserDashboardLayout';
-import { getUserSidebarItems } from '../components/userSidebarItems';
+import DashboardHeader from './DashboardHeader';
+import BlankHeader from './BlankHeader';
+import UserDashboardLayout from './UserDashboardLayout';
+import { getUserSidebarItems } from './userSidebarItems';
 import api from '../services/api';
 
 const { width } = Dimensions.get('window');

@@ -19,7 +19,7 @@ import GlassCard from '../components/GlassCard';
 import GlassButton from '../components/GlassButton';
 import { getAllExams } from '../utils/multiTenantUtils';
 import { colors } from '../theme';
-import AdminLayout from '../components/AdminLayout';
+import AdminLayout from './AdminLayout';
 
 const { width } = Dimensions.get('window');
 

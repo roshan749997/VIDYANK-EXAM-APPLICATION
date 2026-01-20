@@ -1,8 +1,8 @@
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
-import DashboardDesktop from '../components/DashboardDesktop';
-import DashboardMobile from '../components/DashboardMobile';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import DashboardDesktop from './DashboardDesktop';
+import DashboardMobile from './DashboardMobile';
+import UserDashboardLayout from './UserDashboardLayout';
 
 const NewDashboard = () => {
   const { width } = useWindowDimensions();

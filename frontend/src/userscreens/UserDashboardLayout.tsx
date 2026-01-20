@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Modal, TouchableOpacity, useWindowDimensions, SafeAreaView, BackHandler, Alert } from 'react-native';
-import GlassSidebar from './GlassSidebar';
+import GlassSidebar from '../components/GlassSidebar';
 import DashboardHeader from './DashboardHeader';
 import BlankHeader from './BlankHeader';
 import UserDetailsModal from './UserDetailsModal';

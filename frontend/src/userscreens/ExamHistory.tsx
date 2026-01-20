@@ -18,10 +18,10 @@ import { RootStackParamList } from '../../App';
 import GlassCard from '../components/GlassCard';
 import { colors } from '../theme';
 import GlassSidebar from '../components/GlassSidebar';
-import DashboardHeader from '../components/DashboardHeader';
-import BlankHeader from '../components/BlankHeader';
-import { getUserSidebarItems } from '../components/userSidebarItems';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import DashboardHeader from './DashboardHeader';
+import BlankHeader from './BlankHeader';
+import { getUserSidebarItems } from './userSidebarItems';
+import UserDashboardLayout from './UserDashboardLayout';
 import { useUser } from '../context/UserContext';
 import api from '../services/api';
 

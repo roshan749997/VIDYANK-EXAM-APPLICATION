@@ -18,7 +18,7 @@ import { RootStackParamList } from '../../App';
 import GlassCard from '../components/GlassCard';
 import { colors } from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import UserDashboardLayout from './UserDashboardLayout';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'VidyankaTestSeries'>;
@@ -76,7 +76,7 @@ const VidyankaTestSeries: React.FC<Props> = ({ navigation }) => {
     { id: '6', name: 'FMJE', fullName: 'Foreign Medical Graduate Examination', icon: 'file-text', available: false, color: '#0891b2' },
   ];
 
-  // Sample questions (should match ExamScreen)
+  // Sample questions for mock tests
   const UPSC_QUESTIONS = [
     { id: '1', type: 'single', question: 'Who is known as the Father of the Indian Constitution?', options: ['Mahatma Gandhi', 'B. R. Ambedkar', 'Jawaharlal Nehru', 'Sardar Patel'], answer: 1 },
     { id: '2', type: 'multi', question: 'Which of the following are fundamental rights? (Select all that apply)', options: ['Right to Equality', 'Right to Vote', 'Right to Freedom', 'Right to Property'], answer: [0, 2] },

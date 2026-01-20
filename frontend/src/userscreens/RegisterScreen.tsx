@@ -7,7 +7,7 @@ import GlassButton from '../components/GlassButton';
 import GlassInput from '../components/GlassInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Picker } from '@react-native-picker/picker';
-import BlankHeader from '../components/BlankHeader';
+import BlankHeader from './BlankHeader';
 import api from '../services/api';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Register'>;

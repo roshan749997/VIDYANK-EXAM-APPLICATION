@@ -5,7 +5,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import api from '../services/api';
 import { LinearGradient } from 'expo-linear-gradient';
-import AdminLayout from '../components/AdminLayout';
+import AdminLayout from './AdminLayout';
 
 interface Question {
   id: string;

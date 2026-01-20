@@ -16,7 +16,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import { colors } from '../theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import BlankHeader from '../components/BlankHeader';
+import BlankHeader from './BlankHeader';
 import EmailIcon from '../../assets/icons/ULoginEmailIcon.svg';
 import PassIcon from '../../assets/icons/ULoginPassIcon.svg';
 import { Ionicons } from '@expo/vector-icons';

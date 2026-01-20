@@ -8,9 +8,9 @@ import { Ionicons, MaterialCommunityIcons, FontAwesome5, Feather } from '@expo/v
 import GlassCard from '../components/GlassCard';
 import { colors } from '../theme';
 import GlassSidebar from '../components/GlassSidebar';
-import DashboardHeader from '../components/DashboardHeader';
+import DashboardHeader from './DashboardHeader';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import BlankHeader from '../components/BlankHeader';
+import BlankHeader from './BlankHeader';
 import { getUserSidebarItems } from './userSidebarItems';
 import { useUser } from '../context/UserContext';
 import api from '../services/api';

@@ -10,7 +10,7 @@ import {
   FlatList, 
   Platform 
 } from 'react-native';
-import UserDashboardLayout from '../components/UserDashboardLayout';
+import UserDashboardLayout from './UserDashboardLayout';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
 import type { RootStackParamList } from '../../App';
