@@ -257,9 +257,7 @@ const DashboardMobile = () => {
                     <View style={styles.cardHeaderTitle}>
                       <Text style={styles.cardTitle}>Test Series & Practice</Text>
                     </View>
-                    <TouchableOpacity style={styles.btnOutline} onPress={() => handleNavigation('VidyankaTestSeries')}>
-                      <Text style={styles.btnOutlineText}>View All</Text>
-                    </TouchableOpacity>
+
                   </View>
                   {filteredData.testSeries.map((item: any) => (
                     <View key={item.id} style={styles.seriesItem}>

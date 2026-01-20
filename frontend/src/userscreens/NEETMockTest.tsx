@@ -90,7 +90,7 @@ const NEETMockTest: React.FC<Props> = ({ navigation }) => {
   const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(new Array(questions.length).fill(null));
   const [permission, requestPermission] = useCameraPermissions();
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  
+
   // Enhanced proctoring system
   const { warnings, showModal, dismissModal, handleRealFaceDetection, isRealMode, isMonitoring } = useProctoring(testStarted, testEnded);
 
@@ -287,7 +287,7 @@ const NEETMockTest: React.FC<Props> = ({ navigation }) => {
         <Text style={styles.scoreText}>Score: {correct} / {questions.length}</Text>
         <Text style={styles.scoreText}>Answered: {totalAnswered}</Text>
         <Text style={styles.scoreText}>Marked for Review: {totalMarked}</Text>
-        <TouchableOpacity style={styles.scoreButton} onPress={() => navigation.navigate('VidyankaTestSeries')}>
+        <TouchableOpacity style={styles.scoreButton} onPress={() => navigation.navigate('AvailableExams')}>
           <Text style={styles.scoreButtonText}>Return to Test Series</Text>
         </TouchableOpacity>
       </View>
@@ -308,7 +308,7 @@ const NEETMockTest: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-              <StatusBar barStyle="light-content" backgroundColor="#282FFB1A" />
+      <StatusBar barStyle="light-content" backgroundColor="#282FFB1A" />
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>NEET Mock Test</Text>
@@ -391,7 +391,7 @@ const NEETMockTest: React.FC<Props> = ({ navigation }) => {
           <CameraView style={styles.camera} facing="front" />
         </View>
       </View>
-      
+
       {/* Enhanced Proctoring Modal */}
       <ProctoringModal
         visible={showModal}

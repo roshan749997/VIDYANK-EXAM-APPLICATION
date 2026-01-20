@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import RegisterScreen from './src/userscreens/RegisterScreen';
 import SignInScreen from './src/userscreens/SignInScreen';
 import newdashboard from './src/userscreens/NewDashboard';
-import VidyankaTestSeries from './src/userscreens/VidyankaTestSeries';
+
 import Notifications from './src/userscreens/Notifications';
 import ExamHistory from './src/userscreens/ExamHistory';
 import StudyPlanner from './src/userscreens/StudyPlanner';
@@ -39,7 +39,7 @@ export type RootStackParamList = {
   Register: undefined;
   ForgotPassword: undefined;
   NewDashboard: undefined;
-  VidyankaTestSeries: undefined;
+
   Notifications: undefined;
   ExamHistory: undefined;
   StudyPlanner: undefined;
@@ -121,7 +121,7 @@ export default function App() {
                 gestureEnabled: false // Prevent swipe back
               }}
             />
-            <Stack.Screen name="VidyankaTestSeries" component={VidyankaTestSeries} options={{ headerShown: false }} />
+
             <Stack.Screen name="Notifications" component={Notifications} options={{ headerShown: false }} />
             <Stack.Screen name="ExamHistory" component={ExamHistory} options={{ headerShown: false }} />
             <Stack.Screen name="StudyPlanner" component={StudyPlanner} options={{ headerShown: false }} />

@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function getUserSidebarItems(navigation: any, closeSidebar: () => void, activeLabel?: string) {
   const getColor = (label: string) => (activeLabel === label ? '#fff' : '#000');
-  
+
   const handleSignOut = async () => {
     try {
       await AsyncStorage.removeItem('currentUser');
@@ -20,7 +20,7 @@ export function getUserSidebarItems(navigation: any, closeSidebar: () => void, a
 
   return [
     { label: 'Dashboard', icon: <Ionicons name="speedometer-outline" size={20} color={getColor('Dashboard')} />, onPress: () => { closeSidebar(); navigation.navigate('NewDashboard'); }, active: activeLabel === 'Dashboard' },
-    { label: 'Test Series', icon: <Ionicons name="book-outline" size={20} color={getColor('Test Series')} />, onPress: () => { closeSidebar(); navigation.navigate('VidyankaTestSeries'); }, active: activeLabel === 'Test Series' },
+
     { label: 'Available Exams', icon: <Ionicons name="list-circle-outline" size={20} color={getColor('Available Exams')} />, onPress: () => { closeSidebar(); navigation.navigate('AvailableExams'); }, active: activeLabel === 'Available Exams' },
     { label: 'Exam History', icon: <Ionicons name="calendar-outline" size={20} color={getColor('Exam History')} />, onPress: () => { closeSidebar(); navigation.navigate('ExamHistory'); }, active: activeLabel === 'Exam History' },
     { label: 'Progress', icon: <Ionicons name="bar-chart-outline" size={20} color={getColor('Progress')} />, onPress: () => { closeSidebar(); navigation.navigate('Progress'); }, active: activeLabel === 'Progress' },

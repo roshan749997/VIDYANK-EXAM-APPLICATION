@@ -100,7 +100,7 @@ const MPSCMockTest: React.FC<Props> = ({ navigation }) => {
     proctoringTimerRef.current = setInterval(() => {
       const warnings = [];
       const random = Math.random();
-      
+
       if (random < 0.3) {
         warnings.push("Please ensure your face is clearly visible in the camera");
       }
@@ -110,11 +110,11 @@ const MPSCMockTest: React.FC<Props> = ({ navigation }) => {
       if (random < 0.1) {
         warnings.push("Mobile phone usage detected - please keep your phone away");
       }
-      
+
       if (warnings.length > 0) {
         setProctoringWarnings(warnings);
         setShowProctoringModal(true);
-        
+
         // Hide warning after 5 seconds
         setTimeout(() => {
           setShowProctoringModal(false);
@@ -319,7 +319,7 @@ const MPSCMockTest: React.FC<Props> = ({ navigation }) => {
         <Text style={styles.scoreText}>Score: {correct} / {questions.length}</Text>
         <Text style={styles.scoreText}>Answered: {totalAnswered}</Text>
         <Text style={styles.scoreText}>Marked for Review: {totalMarked}</Text>
-        <TouchableOpacity style={styles.scoreButton} onPress={() => navigation.navigate('VidyankaTestSeries')}>
+        <TouchableOpacity style={styles.scoreButton} onPress={() => navigation.navigate('AvailableExams')}>
           <Text style={styles.scoreButtonText}>Return to Test Series</Text>
         </TouchableOpacity>
       </View>
@@ -340,7 +340,7 @@ const MPSCMockTest: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-              <StatusBar barStyle="light-content" backgroundColor="#282FFB1A" />
+      <StatusBar barStyle="light-content" backgroundColor="#282FFB1A" />
       {/* Header */}
       <View style={styles.header}>
         {isMobile ? (
@@ -436,7 +436,7 @@ const MPSCMockTest: React.FC<Props> = ({ navigation }) => {
           </ScrollView>
         </View>
       </View>
-      
+
       {/* Proctoring Warning Modal */}
       <Modal
         visible={showProctoringModal}
@@ -449,7 +449,7 @@ const MPSCMockTest: React.FC<Props> = ({ navigation }) => {
             {proctoringWarnings.map((warning, index) => (
               <Text key={index} style={styles.modalWarning}>{warning}</Text>
             ))}
-            <TouchableOpacity 
+            <TouchableOpacity
               style={styles.modalButton}
               onPress={() => setShowProctoringModal(false)}
             >

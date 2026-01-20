@@ -297,7 +297,7 @@ const UPSCMockTest: React.FC<Props> = ({ navigation }) => {
       if (selectedAnswers[i] === q.correctAnswer) correct++;
     });
     const percentage = Math.round((correct / questions.length) * 100);
-    
+
     return (
       <SafeAreaView style={styles.scoreContainer}>
         <View style={styles.scoreContent}>
@@ -320,7 +320,7 @@ const UPSCMockTest: React.FC<Props> = ({ navigation }) => {
               <Text style={styles.scoreValue}>{totalMarked}</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.scoreButton} onPress={() => navigation.navigate('VidyankaTestSeries')}>
+          <TouchableOpacity style={styles.scoreButton} onPress={() => navigation.navigate('AvailableExams')}>
             <Text style={styles.scoreButtonText}>Return to Test Series</Text>
           </TouchableOpacity>
         </View>
@@ -347,8 +347,8 @@ const UPSCMockTest: React.FC<Props> = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-              <StatusBar barStyle="light-content" backgroundColor="#282FFB1A" />
-      
+      <StatusBar barStyle="light-content" backgroundColor="#282FFB1A" />
+
       {/* Header */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
@@ -372,7 +372,7 @@ const UPSCMockTest: React.FC<Props> = ({ navigation }) => {
       <View style={styles.mainContent}>
         {/* Left Panel */}
         <View style={styles.leftPanel}>
-          <ScrollView 
+          <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.leftPanelScroll}
           >
@@ -386,7 +386,7 @@ const UPSCMockTest: React.FC<Props> = ({ navigation }) => {
 
         {/* Question Area */}
         <View style={styles.questionArea}>
-          <ScrollView 
+          <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.questionScroll}
             contentContainerStyle={styles.questionScrollContent}
@@ -398,9 +398,9 @@ const UPSCMockTest: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.questionMarks}>1 Mark</Text>
               </View>
             </View>
-            
+
             <Text style={styles.questionText}>{questions[currentQuestion].question}</Text>
-            
+
             <View style={styles.optionsContainer}>
               {questions[currentQuestion].options.map((option, index) => (
                 <TouchableOpacity
@@ -430,7 +430,7 @@ const UPSCMockTest: React.FC<Props> = ({ navigation }) => {
                 </TouchableOpacity>
               ))}
             </View>
-            
+
             {/* Navigation Buttons */}
             <View style={styles.navigationContainer}>
               <View style={styles.navigationRow}>

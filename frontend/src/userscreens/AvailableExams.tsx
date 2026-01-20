@@ -12,33 +12,41 @@ import UserDashboardLayout from './UserDashboardLayout';
 import { getUserSidebarItems } from './userSidebarItems';
 import api from '../services/api';
 
-const { width } = Dimensions.get('window');
-
 const AvailableExams = () => {
   const { width: windowWidth } = useWindowDimensions();
-  const isMobile = windowWidth < 480;
-  const isTablet = windowWidth >= 480 && windowWidth < 768;
   const isDesktop = windowWidth >= 768;
+  const isMobile = windowWidth < 640;
+
+  // Initial width estimation to prevent layout flash
+  // Desktop has sidebar (~260px) + layout padding (~40px)
+  const initialWidth = isDesktop ? windowWidth - 300 : windowWidth;
+  const [containerWidth, setContainerWidth] = useState(initialWidth);
+
   const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const navigation = useNavigation<any>();
   const [exams, setExams] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  // Get number of columns based on screen size
+  // Get number of columns based on CONTAINER width (not window)
   const getNumColumns = () => {
-    if (windowWidth >= 1200) return 3; // Large desktop
-    if (windowWidth >= 768) return 2;  // Desktop/tablet
-    return 1; // Mobile
+    if (containerWidth >= 900) return 3;
+    if (containerWidth >= 550) return 2;
+    return 1;
   };
+
+  const numColumns = getNumColumns();
 
   // Get card width based on screen size and columns
   const getCardWidth = () => {
-    const numColumns = getNumColumns();
-    const containerPadding = isDesktop ? 48 : 32; // Account for sidebar and padding
-    const cardGap = 16;
-    return numColumns === 1 ? '100%' : `${(100 - ((numColumns - 1) * 2)) / numColumns}%`;
+    const horizontalPadding = isDesktop ? 48 : 32; // listContainer padding
+    const gap = 20;
+    const totalGap = (numColumns - 1) * gap;
+    const availableWidth = containerWidth - horizontalPadding - totalGap;
+    return Math.floor(availableWidth / numColumns); // Floor to avoid sub-pixel overflow
   };
+
+  const cardWidth = getCardWidth();
 
   const closeSidebar = () => {
     setSidebarCollapsed(true);
@@ -53,7 +61,6 @@ const AvailableExams = () => {
   const fetchExams = async () => {
     try {
       const { data } = await api.get('/exams');
-      // Filter Active exams and map _id to id
       const activeExams = data
         .filter((exam: any) => exam.status === 'Active')
         .map((exam: any) => ({ ...exam, id: exam._id || exam.id }));
@@ -83,25 +90,6 @@ const AvailableExams = () => {
     navigation.navigate('TakeExam', { examId: exam.id });
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty?.toLowerCase()) {
-      case 'easy': return colors.success;
-      case 'medium': return colors.warning;
-      case 'hard': return colors.error;
-      default: return colors.warning;
-    }
-  };
-
-  const getSubjectIcon = (subject: string) => {
-    const subjectLower = subject?.toLowerCase();
-    if (subjectLower?.includes('math')) return 'calculator';
-    if (subjectLower?.includes('science')) return 'flask';
-    if (subjectLower?.includes('history')) return 'library';
-    if (subjectLower?.includes('english')) return 'book';
-    if (subjectLower?.includes('computer')) return 'laptop';
-    return 'document-text';
-  };
-
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -112,205 +100,180 @@ const AvailableExams = () => {
     );
   }
 
-  const renderExamCard = ({ item }: any) => {
-    const available = item.status === 'Active';
+  const renderExamCard = ({ item, index }: any) => {
+    const variations = [
+      { bg: '#FFFCF2', sectionBg: '#FFF3CD', icon: 'school', iconColor: '#FFB300' },
+      { bg: '#F0FDFF', sectionBg: '#E0F2FE', icon: 'flask', iconColor: '#0EA5E9' },
+      { bg: '#FFF5F7', sectionBg: '#FFE4E6', icon: 'medkit', iconColor: '#E11D48' },
+      { bg: '#F5F5FF', sectionBg: '#E0E7FF', icon: 'briefcase', iconColor: '#4F46E5' },
+      { bg: '#F0FDF4', sectionBg: '#DCFCE7', icon: 'leaf', iconColor: '#16A34A' },
+      { bg: '#FAFAFA', sectionBg: '#E4E4E7', icon: 'grid', iconColor: '#52525B' },
+    ];
+
+    const styleVar = variations[index % variations.length];
+    const isSmallMobile = windowWidth < 400;
 
     return (
       <TouchableOpacity
-        style={[styles.examCard, !available && styles.examCardDisabled]}
-        onPress={() => available && handleStartTest(item)}
-        activeOpacity={0.7}
+        style={[styles.examCard, { width: cardWidth, height: 200 }]}
+        onPress={() => handleStartTest(item)}
+        activeOpacity={0.9}
       >
-        {/* Header with Icon */}
-        <View style={styles.cardHeader}>
-          <View style={styles.iconContainer}>
-            <Ionicons name="document-text" size={24} color={colors.primary} />
+        <View style={[styles.cardLeftContent, isMobile && { padding: 16, marginRight: 80 }]}>
+          <Text style={[styles.cardTitle, isSmallMobile && { fontSize: 18 }]} numberOfLines={2}>{item.title}</Text>
+
+          <View style={styles.tagsContainer}>
+            <View style={styles.tag}><Text style={styles.tagText}>{item.subject || 'Exams'}</Text></View>
+            {item.difficulty && !isSmallMobile && <View style={styles.tag}><Text style={styles.tagText}>{item.difficulty}</Text></View>}
+            <View style={styles.tag}><Text style={[styles.tagText, isMobile && { fontSize: 10 }]}>{item.duration}m</Text></View>
           </View>
-          <View style={styles.headerText}>
-            <Text style={styles.examTitle} numberOfLines={2}>{item.title}</Text>
-            <Text style={styles.examSubject}>{item.subject || 'General'}</Text>
+
+          <View style={styles.exploreButton}>
+            <Text style={[styles.exploreText, isSmallMobile && { fontSize: 12 }]}>{isSmallMobile ? 'Explore' : 'Explore Category'}</Text>
+            <View style={[styles.arrowContainer, isMobile && { width: 24, height: 24 }]}>
+              <Ionicons name="arrow-forward" size={14} color="#334155" />
+            </View>
           </View>
         </View>
 
-        {/* Description */}
-        {item.description && (
-          <Text style={styles.examDescription} numberOfLines={2}>
-            {item.description}
-          </Text>
-        )}
-
-        {/* Stats Row */}
-        <View style={styles.statsRow}>
-          <View style={styles.statItem}>
-            <Ionicons name="help-circle-outline" size={16} color={colors.textSecondary} />
-            <Text style={styles.statText}>{item.totalQuestions || 0} Questions</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Ionicons name="time-outline" size={16} color={colors.textSecondary} />
-            <Text style={styles.statText}>{item.duration || 60} mins</Text>
-          </View>
+        <View style={[
+          styles.cardRightDecoration,
+          { backgroundColor: styleVar.sectionBg },
+          isMobile && { width: 90, borderTopLeftRadius: 60, borderBottomLeftRadius: 60 }
+        ]}>
+          <Ionicons name={styleVar.icon as any} size={isMobile ? 32 : 42} color={styleVar.iconColor} />
         </View>
-
-        {/* Difficulty Badge */}
-        {item.difficulty && (
-          <View style={[styles.difficultyBadge, {
-            backgroundColor: getDifficultyColor(item.difficulty) + '20'
-          }]}>
-            <Text style={[styles.difficultyText, {
-              color: getDifficultyColor(item.difficulty)
-            }]}>
-              {item.difficulty}
-            </Text>
-          </View>
-        )}
-
-        {/* Start Button */}
-        {available && (
-          <TouchableOpacity
-            style={styles.startButton}
-            onPress={() => handleStartTest(item)}
-          >
-            <Text style={styles.startButtonText}>Start Exam</Text>
-            <Ionicons name="arrow-forward" size={20} color="#fff" />
-          </TouchableOpacity>
-        )}
       </TouchableOpacity>
     );
   };
 
-  // Main layout: sidebar + header + main content
   return (
     <UserDashboardLayout title="Available Exams" activeLabel="Available Exams">
-      <FlatList
-        data={exams}
-        keyExtractor={item => item.id}
-        renderItem={renderExamCard}
-        contentContainerStyle={[
-          styles.listContainer,
-          { paddingHorizontal: isDesktop ? 24 : 16 }
-        ]}
-        showsVerticalScrollIndicator={false}
-        numColumns={getNumColumns()}
-        columnWrapperStyle={getNumColumns() > 1 ? styles.columnWrapper : undefined}
-        key={`${windowWidth}-${getNumColumns()}`} // Force re-render on window size change
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={handleRefresh}
-            colors={[colors.primary]}
-            tintColor={colors.primary}
-          />
-        }
-        ListEmptyComponent={
-          <View style={styles.emptyContainer}>
-            <Ionicons name="document-text-outline" size={64} color={colors.textTertiary} />
-            <Text style={styles.emptyText}>
-              No active exams found. Pull down to refresh.
-            </Text>
-          </View>
-        }
-      />
+      <View
+        style={{ flex: 1 }}
+        onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}
+      >
+        <FlatList
+          key={`${numColumns}-${containerWidth}`} // Force re-render on size change
+          data={exams}
+          keyExtractor={item => item.id}
+          renderItem={renderExamCard}
+          contentContainerStyle={[
+            styles.listContainer,
+            { paddingHorizontal: isDesktop ? 24 : 16 }
+          ]}
+          showsVerticalScrollIndicator={false}
+          numColumns={numColumns}
+          columnWrapperStyle={numColumns > 1 ? styles.columnWrapper : undefined}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              colors={[colors.primary]}
+              tintColor={colors.primary}
+            />
+          }
+          ListEmptyComponent={
+            <View style={styles.emptyContainer}>
+              <Ionicons name="document-text-outline" size={64} color={colors.textTertiary} />
+              <Text style={styles.emptyText}>
+                No active exams found. Pull down to refresh.
+              </Text>
+            </View>
+          }
+        />
+      </View>
     </UserDashboardLayout>
   );
 };
 
 const styles = StyleSheet.create({
   listContainer: {
-    padding: 16,
+    padding: 24,
     paddingBottom: 80,
   },
   columnWrapper: {
     justifyContent: 'space-between',
-    gap: 16,
+    gap: 20,
   },
   examCard: {
-    backgroundColor: colors.surface,
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    marginBottom: 20,
+    flexDirection: 'row',
+    overflow: 'hidden',
     borderWidth: 1,
-    borderColor: colors.border,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    borderColor: '#F3F4F6',
+    shadowColor: '#64748B',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.08,
+    shadowRadius: 16,
+    elevation: 3,
   },
-  examCardDisabled: {
-    opacity: 0.6,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    marginBottom: 12,
-  },
-  iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 8,
-    backgroundColor: colors.primary + '10',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  headerText: {
+  cardLeftContent: {
     flex: 1,
+    padding: 24,
+    justifyContent: 'space-between',
+    zIndex: 10,
+    marginRight: 60,
   },
-  examTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: colors.text,
-    marginBottom: 4,
-  },
-  examSubject: {
-    fontSize: 14,
-    color: colors.primary,
-    fontWeight: '500',
-  },
-  examDescription: {
-    fontSize: 14,
-    color: colors.textSecondary,
-    lineHeight: 20,
-    marginBottom: 12,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    marginBottom: 12,
-    gap: 16,
-  },
-  statItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  statText: {
-    fontSize: 14,
-    color: colors.textSecondary,
-  },
-  difficultyBadge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
-    marginBottom: 12,
-  },
-  difficultyText: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  startButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    flexDirection: 'row',
+  cardRightDecoration: {
+    width: 140,
+    height: '150%',
+    top: '-25%',
+    right: 0,
+    borderTopLeftRadius: 100,
+    borderBottomLeftRadius: 100,
+    position: 'absolute',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 8,
+    paddingLeft: 20,
+    zIndex: 1,
   },
-  startButtonText: {
-    color: '#fff',
-    fontSize: 16,
+  cardTitle: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#1E293B',
+    lineHeight: 28,
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    marginTop: 12,
+    marginBottom: 16,
+  },
+  tag: {
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: '#E2E8F0',
+    backgroundColor: '#fff',
+  },
+  tagText: {
+    fontSize: 12,
+    color: '#64748B',
     fontWeight: '600',
+  },
+  exploreButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginTop: 'auto',
+  },
+  exploreText: {
+    fontSize: 14,
+    fontWeight: '700',
+    color: '#334155',
+  },
+  arrowContainer: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: '#F1F5F9', // Light gray circle
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   loadingContainer: {
     flex: 1,
