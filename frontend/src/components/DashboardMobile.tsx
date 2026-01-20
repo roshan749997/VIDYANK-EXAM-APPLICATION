@@ -5,8 +5,7 @@ import { RootStackParamList } from '../../App';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Modal, SafeAreaView } from 'react-native';
 import { Ionicons, MaterialCommunityIcons, FontAwesome5, Feather } from '@expo/vector-icons';
-import GlassCard from '../components/GlassCard';
-import { colors } from '../theme';
+import { colors, spacing, borderRadius, typography, shadows } from '../theme';
 import GlassSidebar from '../components/GlassSidebar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BlankHeader from '../components/BlankHeader';
@@ -232,7 +231,7 @@ const DashboardMobile = () => {
             <View style={[styles.dashboardGrid, styles.dashboardGridMobile]}>
               <View style={[styles.mainColumn, styles.mainColumnMobile]}>
                 {/* Upcoming Exams Card */}
-                <GlassCard style={styles.card}>
+                <View style={styles.card}>
                   <View style={styles.cardHeader}>
                     <View style={styles.cardHeaderTitle}>
                       <Text style={styles.cardTitle}>Upcoming Exams</Text>
@@ -240,9 +239,9 @@ const DashboardMobile = () => {
                     <TouchableOpacity style={styles.btnOutline}><Text style={styles.btnOutlineText}>View All</Text></TouchableOpacity>
                   </View>
                   <FlatList data={filteredData.upcomingExams} renderItem={renderUpcomingExam} keyExtractor={item => item.id} />
-                </GlassCard>
+                </View>
                 {/* Progress Tracker Card */}
-                <GlassCard style={styles.card}>
+                <View style={styles.card}>
                   <View style={styles.cardHeader}>
                     <View style={styles.cardHeaderTitle}>
                       <Text style={styles.cardTitle}>Progress Tracker</Text>
@@ -252,8 +251,8 @@ const DashboardMobile = () => {
                     <View style={styles.progressColumn}><Text style={styles.sectionTitle}>Syllabus Coverage</Text>{getData().syllabusProgress.map((item: any) => (<View key={item.id} style={styles.progressItem}><View style={styles.progressHeader}><Text style={styles.progressLabel}>{item.subject}</Text><Text style={styles.progressValue}>{item.progress}%</Text></View><ProgressBar progress={item.progress} color={item.color} /></View>))}</View>
                     <View style={styles.progressColumn}><Text style={styles.sectionTitle}>Topic Mastery</Text><View style={styles.topicSection}><Text style={styles.topicHeading}><Feather name="check-circle" size={14} color="#22c55e" /> Strong Areas</Text><View style={styles.topicList}><Text style={styles.topicTagStrong}>Indian History</Text><Text style={styles.topicTagStrong}>Geography</Text></View></View><View style={styles.topicSection}><Text style={styles.topicHeading}><Feather name="alert-circle" size={14} color="#f97316" /> Needs Improvement</Text><View style={styles.topicList}><Text style={styles.topicTagWeak}>Polity</Text><Text style={styles.topicTagWeak}>Current Affairs</Text></View></View></View>
                   </View>
-                </GlassCard>
-                <GlassCard style={styles.card}>
+                </View>
+                <View style={styles.card}>
                   <View style={styles.cardHeader}>
                     <View style={styles.cardHeaderTitle}>
                       <Text style={styles.cardTitle}>Test Series & Practice</Text>
@@ -306,9 +305,9 @@ const DashboardMobile = () => {
                       </View>
                     </View>
                   ))}
-                </GlassCard>
+                </View>
                 <View style={{ flexDirection: 'column', gap: 24, width: '100%' }}>
-                  <GlassCard style={[styles.card, { flex: 1, maxWidth: undefined }]}>
+                  <View style={[styles.card, { flex: 1, maxWidth: undefined }]}>
                     <View style={styles.cardHeader}>
                       <View style={styles.cardHeaderTitle}>
                         <Text style={styles.cardTitle}>Exam History & Results</Text>
@@ -318,8 +317,8 @@ const DashboardMobile = () => {
                       </TouchableOpacity>
                     </View>
                     <View><View style={styles.historyTableHeader}><Text style={[styles.historyTh, { flex: 2 }]}>Exam</Text><Text style={styles.historyTh}>Score</Text><Text style={styles.historyTh}>Rank</Text><Text style={styles.historyTh}>Trend</Text></View>{filteredData.examHistory.map((item: any) => (<View key={item.id} style={styles.historyTableRow}><Text style={[styles.historyTd, { flex: 2 }]}>{item.name}</Text><Text style={[styles.historyTd, item.scoreType === 'good' && styles.scoreGood]}>{item.score}</Text><Text style={styles.historyTd}>{item.rank}<Text style={styles.totalRank}> of {item.total}</Text></Text><Text style={styles.historyTd}>{item.trend === 'up' ? <Feather name="trending-up" size={18} color="#16a34a" /> : <Feather name="minus" size={18} color="#64748b" />}</Text></View>))}</View>
-                  </GlassCard>
-                  <GlassCard style={[styles.card, { flex: 1, maxWidth: undefined }]}>
+                  </View>
+                  <View style={[styles.card, { flex: 1, maxWidth: undefined }]}>
                     <View style={styles.cardHeader}>
                       <View style={styles.cardHeaderTitle}>
                         <Text style={styles.cardTitle}>Study Planner</Text>
@@ -343,8 +342,8 @@ const DashboardMobile = () => {
                         </TouchableOpacity>
                       </View>
                     ))}
-                  </GlassCard>
-                  <GlassCard style={[styles.card, { flex: 1, maxWidth: undefined }]}>
+                  </View>
+                  <View style={[styles.card, { flex: 1, maxWidth: undefined }]}>
                     <View style={styles.cardHeader}>
                       <View style={styles.cardHeaderTitle}>
                         <Text style={styles.cardTitle}>Recent Activity</Text>
@@ -354,12 +353,12 @@ const DashboardMobile = () => {
                       </TouchableOpacity>
                     </View>
                     {getData().recentActivity.map((item: any, index: any) => (<View key={item.id} style={styles.timelineItem}><View style={styles.timelineMarkerContainer}><View style={[styles.timelineMarker, { backgroundColor: item.color }]}><Feather name={item.icon as any} size={14} color="#fff" /></View>{index < getData().recentActivity.length - 1 && <View style={styles.timelineLine} />}</View><View style={styles.timelineContent}><Text style={styles.timelineTitle}>{item.title}</Text><View style={styles.timelineDetails}><Text>{item.details.map((d: any) => <Text key={d.text} style={{ color: d.color }}>{d.text}</Text>)}</Text></View><Text style={styles.timelineTime}>{item.time}</Text></View></View>))}
-                  </GlassCard>
+                  </View>
                 </View>
               </View>
               <View style={[styles.sideColumn, styles.sideColumnMobile]}>
                 {/* Notifications Card */}
-                <GlassCard style={styles.card}>
+                <View style={styles.card}>
                   <View style={styles.cardHeader}>
                     <View style={styles.cardHeaderTitle}>
                       <Text style={styles.cardTitle}>Notifications</Text>
@@ -374,9 +373,9 @@ const DashboardMobile = () => {
                       <Text style={styles.btnLinkText}>View All Notifications</Text>
                     </TouchableOpacity >
                   </View>
-                </GlassCard>
+                </View>
                 {/* Leaderboard Card */}
-                <GlassCard style={styles.card}>
+                <View style={styles.card}>
                   <View style={styles.cardHeader}>
                     <View style={styles.cardHeaderTitle}>
                       <Text style={styles.cardTitle}>Leaderboard</Text>
@@ -386,7 +385,7 @@ const DashboardMobile = () => {
                     </TouchableOpacity>
                   </View>
                   <FlatList data={getData().leaderboard} renderItem={renderLeaderboardItem} keyExtractor={item => item.id} />
-                </GlassCard>
+                </View>
               </View>
             </View>
           </View>

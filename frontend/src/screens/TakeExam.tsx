@@ -9,13 +9,12 @@ import {
   ScrollView,
   StatusBar,
   Dimensions,
-  useWindowDimensions
+  useWindowDimensions,
+  Platform
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import GlassCard from '../components/GlassCard';
-import GlassButton from '../components/GlassButton';
 import { Ionicons } from '@expo/vector-icons';
-import { colors } from '../theme';
+import { colors, spacing, borderRadius, typography, shadows } from '../theme';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import { MaterialIcons } from '@expo/vector-icons';
 import api from '../services/api';
@@ -41,7 +40,7 @@ const TakeExam = () => {
   const [answers, setAnswers] = useState<{ [key: string]: number | null }>({});
   const [submitted, setSubmitted] = useState(false);
   const [testStarted, setTestStarted] = useState(false);
-  
+
   // Set start time when test starts
   useEffect(() => {
     if (testStarted && !startTime) {
@@ -153,12 +152,12 @@ const TakeExam = () => {
 
   const getStatusColor = (status: QuestionStatus) => {
     switch (status) {
-      case 'answered': return '#28a745';
-      case 'marked': return '#ffc107';
-      case 'answeredMarked': return '#17a2b8';
-      case 'visited': return '#dc3545';
-      case 'notVisited': return '#6c757d';
-      default: return '#6c757d';
+      case 'answered': return colors.success;
+      case 'marked': return colors.warning;
+      case 'answeredMarked': return colors.info;
+      case 'visited': return colors.error;
+      case 'notVisited': return colors.textSecondary;
+      default: return colors.textSecondary;
     }
   };
 
@@ -183,12 +182,12 @@ const TakeExam = () => {
       // Calculate score
       let correct = 0;
       const answerArray: any[] = [];
-      
+
       questions.forEach((q, idx) => {
         const selectedAnswer = answers[idx];
         const isCorrect = selectedAnswer === q.answer;
         if (isCorrect) correct++;
-        
+
         answerArray.push({
           questionId: q._id || `q-${idx}`,
           selectedAnswer: selectedAnswer !== null && selectedAnswer !== undefined ? selectedAnswer : -1,
@@ -198,7 +197,7 @@ const TakeExam = () => {
 
       const score = questions.length > 0 ? Math.round((correct / questions.length) * 100) : 0;
       const totalAnswered = answeredQuestions.filter(Boolean).length;
-      
+
       // Calculate time taken
       const endTime = new Date();
       const duration = startTime ? Math.round((endTime.getTime() - startTime.getTime()) / 1000 / 60) : 0;
@@ -489,161 +488,183 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.background,
+    padding: 20,
   },
   startTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333',
+    marginBottom: 12,
+    color: colors.text,
     textAlign: 'center',
-    paddingHorizontal: 20,
   },
   startSubtitle: {
     fontSize: 16,
-    color: '#666',
-    marginBottom: 30,
+    color: colors.textSecondary,
+    marginBottom: 32,
     textAlign: 'center',
-    paddingHorizontal: 20,
   },
   startButton: {
-    backgroundColor: '#4f46e5',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
+    backgroundColor: colors.primary,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
     borderRadius: 8,
+    elevation: 2,
+    shadowColor: colors.primary,
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 4 },
   },
   startButtonText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
+
   container: {
     flex: 1,
-    backgroundColor: '#f4f4f4',
-    paddingTop: 18, // Add white space at the top for status bar
+    backgroundColor: colors.background,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
+
   header: {
-    backgroundColor: '#282FFB1A',
+    backgroundColor: colors.surface,
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 16,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 1,
+    borderColor: colors.border,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
   },
   headerTitle: {
-    color: 'white',
-    fontSize: 24,
-    fontWeight: 'bold',
+    color: colors.text,
+    fontSize: 20,
+    fontWeight: '700',
   },
   timerContainer: {
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 5,
+    backgroundColor: colors.primary + '15',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: colors.primary + '30',
   },
   timerText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    color: colors.primary,
+    fontSize: 15,
+    fontWeight: '600',
   },
+
   mainContent: {
     flex: 1,
     flexDirection: 'row',
-    padding: 10,
+    padding: 16,
+    gap: 16,
   },
   leftPanel: {
-    width: width * 0.35,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 15,
-    marginRight: 10,
+    width: width * 0.3,
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: colors.border,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
   },
+
   statusLegend: {
     marginBottom: 20,
+    gap: 8,
   },
   statusItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 4,
   },
   statusBox: {
     width: 12,
     height: 12,
-    borderRadius: 2,
+    borderRadius: 3,
     marginRight: 8,
   },
   statusText: {
     fontSize: 12,
-    color: '#333',
+    color: colors.textSecondary,
     flex: 1,
   },
+
   questionNumbersContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginBottom: 20,
+    gap: 6,
   },
   questionNumber: {
-    width: 35,
-    height: 35,
-    borderRadius: 17.5,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 2,
   },
   selectedQuestion: {
     borderWidth: 2,
-    borderColor: '#007bff',
+    borderColor: colors.primary,
+    transform: [{ scale: 1.1 }],
   },
   questionNumberText: {
     color: 'white',
     fontSize: 12,
     fontWeight: 'bold',
   },
-  endTestButton: {
-    backgroundColor: '#dc3545',
-    paddingVertical: 12,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  endTestButtonText: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
+
   questionArea: {
     flex: 1,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 20,
-    borderWidth: 2,
-    borderColor: '#0044ff',
+    backgroundColor: colors.surface,
+    borderRadius: 12,
+    padding: 24,
+    borderWidth: 1,
+    borderColor: colors.border,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 1,
   },
   questionNumberTextMain: {
     fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333',
+    fontWeight: '700',
+    marginBottom: 12,
+    color: colors.primary,
   },
   questionText: {
     fontSize: 16,
     lineHeight: 24,
-    marginBottom: 20,
-    color: '#333',
+    marginBottom: 24,
+    color: colors.text,
   },
+
   optionsContainer: {
-    marginBottom: 20,
+    marginBottom: 24,
+    gap: 12,
   },
   optionButton: {
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    marginBottom: 10,
-    borderRadius: 5,
+    padding: 16,
+    borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+    marginBottom: 8,
   },
   selectedOption: {
-    backgroundColor: '#e3f2fd',
-    borderColor: '#2196f3',
+    backgroundColor: colors.primary + '10',
+    borderColor: colors.primary,
   },
   optionContent: {
     flexDirection: 'row',
@@ -654,149 +675,151 @@ const styles = StyleSheet.create({
     height: 20,
     borderRadius: 10,
     borderWidth: 2,
-    borderColor: '#ddd',
-    marginRight: 10,
+    borderColor: colors.textTertiary,
+    marginRight: 12,
   },
   radioButtonSelected: {
-    backgroundColor: '#2196f3',
-    borderColor: '#2196f3',
+    borderColor: colors.primary,
+    borderWidth: 6,
   },
   optionText: {
-    fontSize: 14,
-    color: '#333',
+    fontSize: 15,
+    color: colors.text,
     flex: 1,
   },
+
   navigationContainer: {
-    marginTop: 20,
+    marginTop: 'auto',
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderColor: colors.border,
+    gap: 12,
   },
   navigationRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
+    gap: 12,
+    marginBottom: 12,
   },
   navButton: {
-    backgroundColor: '#007bff',
+    backgroundColor: colors.surface,
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    flex: 0.48,
+    paddingVertical: 12,
+    borderRadius: 8,
+    flex: 1,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.primary,
   },
   disabledButton: {
-    backgroundColor: '#ccc',
+    borderColor: colors.border,
+    opacity: 0.5,
   },
   navButtonText: {
-    color: 'white',
+    color: colors.primary,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: '600',
   },
   actionButton: {
-    backgroundColor: '#28a745',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 5,
-    flex: 0.48,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 8,
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.textSecondary,
   },
   markedButton: {
-    backgroundColor: '#ffc107',
+    backgroundColor: colors.warning,
   },
   actionButtonText: {
     color: 'white',
-    fontSize: 12,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+
+  endTestButton: {
+    backgroundColor: colors.error,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  endTestButtonText: {
+    color: 'white',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+
+  togglePanelBtn: {
+    position: 'absolute',
+    right: 16,
+    top: 16,
+    zIndex: 10,
+    backgroundColor: colors.surface,
+    padding: 8,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: colors.border,
+  },
+  togglePanelBtnOpen: {},
+  togglePanelBtnClosed: { right: 16 },
+
+  headerMobileContent: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  headerTitleMobile: {
+    color: colors.text,
+    fontSize: 16,
     fontWeight: 'bold',
   },
+  timerTextMobile: {
+    color: colors.textSecondary,
+    fontSize: 12,
+  },
+
+  leftPanelCameraContainer: {
+    alignItems: 'center',
+    marginBottom: 16,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  camera: {
+    width: 120,
+    height: 120,
+  },
+
   scoreContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.background,
+    padding: 24,
   },
   scoreTitle: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#333',
+    color: colors.text,
+    marginTop: 16,
+    marginBottom: 8,
   },
   scoreText: {
     fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
+    color: colors.textSecondary,
+    marginBottom: 4,
   },
   scoreButton: {
-    backgroundColor: '#4f46e5',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
+    marginTop: 32,
+    backgroundColor: colors.primary,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
     borderRadius: 8,
   },
   scoreButtonText: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  headerMobileContent: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 8,
-  },
-  headerTitleMobile: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 4,
-    textAlign: 'center',
-  },
-  timerTextMobile: {
-    color: 'white',
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  leftPanelCameraContainer: {
-    width: '100%',
-    height: 100,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    overflow: 'hidden',
-    marginBottom: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  camera: {
-    width: '100%',
-    height: '100%',
-  },
-  togglePanelBtn: {
-    position: 'absolute',
-    right: 18,
-    top: 18,
-    zIndex: 10,
-    backgroundColor: 'white',
-    borderRadius: 18,
-    width: 36,
-    height: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 4,
-    elevation: 2,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-  },
-  togglePanelBtnOpen: {
-    // When panel is open, button is at right edge of question area
-  },
-  togglePanelBtnClosed: {
-    // When panel is closed, button is at right edge of question area
-    right: 18,
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 
