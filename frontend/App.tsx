@@ -20,6 +20,7 @@ import TakeExam from './src/userscreens/TakeExam';
 import PerformanceOverview from './src/userscreens/PerformanceOverview';
 import RateUsScreen from './src/userscreens/RateUsScreen';
 import ForgotPasswordScreen from './src/userscreens/ForgotPasswordScreen';
+import Profile from './src/userscreens/Profile';
 // Admin screens imports
 import AdminDashboard from './src/adminscreens/AdminDashboard';
 import Candidates from './src/adminscreens/Candidates';
@@ -53,6 +54,7 @@ export type RootStackParamList = {
   TakeExam: { examId: string };
   PerformanceOverview: undefined;
   RateUsScreen: undefined;
+  Profile: undefined;
   // Admin routes
   AdminDashboard: undefined;
   Exams: undefined;
@@ -135,6 +137,7 @@ export default function App() {
             <Stack.Screen name="TakeExam" component={TakeExam} options={{ headerShown: false }} />
             <Stack.Screen name="PerformanceOverview" component={PerformanceOverview} options={{ headerShown: false }} />
             <Stack.Screen name="RateUsScreen" component={RateUsScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Profile" component={Profile} options={{ headerShown: false }} />
             {/* Admin screens */}
             <Stack.Screen
               name="AdminDashboard"

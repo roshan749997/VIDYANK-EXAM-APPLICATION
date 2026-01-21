@@ -135,13 +135,13 @@ const Notifications = () => {
   return (
     <UserDashboardLayout title="Notifications" activeLabel="Notifications">
       <View style={styles.container}>
-        <View style={{width: '100%', alignItems: 'flex-end', paddingHorizontal: 20, paddingTop: 24, paddingBottom: 8, backgroundColor: '#f8fafc'}}>
+        <View style={{ width: '100%', alignItems: 'flex-end', paddingHorizontal: 20, paddingTop: 24, paddingBottom: 8, backgroundColor: '#f8fafc' }}>
           <TouchableOpacity style={styles.markAllBtn} onPress={markAllAsRead}>
             <Ionicons name="checkmark-done-outline" size={18} color="#4f46e5" />
             <Text style={styles.markAllText}>Mark All Read</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView contentContainerStyle={[styles.grid, !isMobile && {flexDirection: 'row', flexWrap: 'wrap', gap: 16}]}
+        <ScrollView contentContainerStyle={[styles.grid, !isMobile && { flexDirection: 'row', flexWrap: 'wrap', gap: 16 }]}
           showsVerticalScrollIndicator={false}
         >
           {notifications.length === 0 ? (
@@ -155,13 +155,13 @@ const Notifications = () => {
                 key={n.id}
                 style={[
                   styles.card,
-                  !isMobile && {width: '48%'},
+                  !isMobile && { width: '48%' },
                   n.read ? styles.readCard : styles.unreadCard,
                 ]}
                 onPress={() => markAsRead(n.id)}
                 activeOpacity={0.8}
               >
-                <View style={[styles.iconCircle, {backgroundColor: getNotificationColor(n.type, n.priority)+'20'}]}>
+                <View style={[styles.iconCircle, { backgroundColor: getNotificationColor(n.type, n.priority) + '20' }]}>
                   <Ionicons name={getNotificationIcon(n.type)} size={24} color={getNotificationColor(n.type, n.priority)} />
                 </View>
                 <View style={styles.cardContent}>
@@ -202,16 +202,19 @@ const styles = StyleSheet.create({
   markAllBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f1f5f9',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    backgroundColor: '#eef2ff',
+    borderRadius: 24,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    minHeight: 48,
+    borderWidth: 1,
+    borderColor: '#c7d2fe',
   },
   markAllText: {
     color: '#4f46e5',
-    fontSize: 15,
-    fontWeight: '600',
-    marginLeft: 8,
+    fontSize: 16,
+    fontWeight: '700',
+    marginLeft: 10,
   },
   grid: {
     padding: 20,
@@ -220,66 +223,73 @@ const styles = StyleSheet.create({
   },
   card: {
     backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 14,
+    padding: 18,
     marginBottom: 16,
     flexDirection: 'row',
     alignItems: 'flex-start',
-    elevation: 1,
+    elevation: 2,
     shadowColor: '#6366f1',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.06,
-    shadowRadius: 6,
-    borderLeftWidth: 4,
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    borderLeftWidth: 5,
     borderLeftColor: '#6366f1',
+    minHeight: 80,
   },
   unreadCard: {
     borderLeftColor: '#dc2626',
-    backgroundColor: '#fff5f5', // very light red for unread
+    backgroundColor: '#fff5f5',
+    borderLeftWidth: 6,
   },
   readCard: {
-    backgroundColor: '#f5f8ff', // very light blue for read
+    backgroundColor: '#f5f8ff',
+    opacity: 0.85,
   },
   iconCircle: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 48,
+    height: 48,
+    borderRadius: 24,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 12,
+    marginRight: 14,
   },
   cardContent: {
     flex: 1,
+    justifyContent: 'center',
   },
   cardTitle: {
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 17,
+    fontWeight: '700',
     color: '#374151',
-    marginBottom: 4,
+    marginBottom: 6,
+    lineHeight: 22,
   },
   unreadTitle: {
     color: '#1e293b',
-    fontWeight: 'bold',
+    fontWeight: '800',
   },
   cardMsg: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#64748b',
-    marginBottom: 6,
+    marginBottom: 8,
+    lineHeight: 21,
   },
   cardTime: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#a1a1aa',
-    marginTop: 2,
+    marginTop: 4,
+    fontWeight: '500',
   },
   emptyState: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 80,
+    paddingVertical: 100,
   },
   emptyText: {
-    fontSize: 16,
+    fontSize: 17,
     color: '#64748b',
-    marginTop: 12,
+    marginTop: 16,
   },
 });
 

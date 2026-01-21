@@ -45,7 +45,14 @@ const UserDashboardLayout = ({ title, activeLabel, children }: { title: string; 
   // Handle back button press
   useEffect(() => {
     const onBackPress = () => {
-      if (user) {
+      // If sidebar is open, close it first
+      if (!sidebarCollapsed) {
+        closeSidebar();
+        return true;
+      }
+
+      // On Dashboard, show logout confirmation
+      if (activeLabel === 'Dashboard') {
         Alert.alert(
           'Logout',
           'Are you sure you want to logout?',
@@ -59,8 +66,11 @@ const UserDashboardLayout = ({ title, activeLabel, children }: { title: string; 
               style: 'destructive',
               onPress: async () => {
                 try {
+                  await AsyncStorage.removeItem('authToken');
                   await AsyncStorage.removeItem('currentUser');
-                  navigation.reset({
+                  await AsyncStorage.removeItem('userInfo');
+                  await AsyncStorage.removeItem('sessionData');
+                  (navigation as any).reset({
                     index: 0,
                     routes: [{ name: 'Index' }],
                   });
@@ -73,12 +83,20 @@ const UserDashboardLayout = ({ title, activeLabel, children }: { title: string; 
         );
         return true; // Prevent default back behavior
       }
-      return false; // Allow default back behavior
+
+      // On all other screens, navigate back
+      if (navigation.canGoBack()) {
+        navigation.goBack();
+        return true;
+      }
+
+      // If can't go back, do nothing (let system handle it)
+      return false;
     };
 
     const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
     return () => subscription.remove();
-  }, [user, navigation]);
+  }, [user, navigation, sidebarCollapsed, activeLabel]);
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#f8fafc' }}>
@@ -143,11 +161,11 @@ const UserDashboardLayout = ({ title, activeLabel, children }: { title: string; 
         ) : (
           <View style={{ flex: 1, flexDirection: 'row', minHeight: 0 }}>
             <GlassSidebar items={sidebarItems} collapsed={sidebarCollapsed} onClose={closeSidebar} />
-            <View style={{ 
-              flex: 1, 
-              flexDirection: 'column', 
-              alignItems: 'stretch', 
-              minHeight: 0, 
+            <View style={{
+              flex: 1,
+              flexDirection: 'column',
+              alignItems: 'stretch',
+              minHeight: 0,
               width: '100%',
               paddingLeft: sidebarCollapsed ? 16 : 24, // Add padding when sidebar is visible
               paddingRight: 16,
@@ -158,7 +176,7 @@ const UserDashboardLayout = ({ title, activeLabel, children }: { title: string; 
           </View>
         )}
       </View>
-      
+
       {/* User Details Modal - rendered at root level */}
       <UserDetailsModal
         user={user}

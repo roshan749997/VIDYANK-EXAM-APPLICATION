@@ -238,11 +238,15 @@ const TakeExam = () => {
             style={[
               styles.questionNumber,
               { backgroundColor: getStatusColor(status) },
-              isSelected && styles.selectedQuestion
+              isSelected && styles.selectedQuestion,
+              isMobile && styles.questionNumberMobile
             ]}
             onPress={() => navigateToQuestion(index)}
+            activeOpacity={0.7}
+            accessibilityLabel={`Question ${index + 1}`}
+            accessibilityHint={`Status: ${status}`}
           >
-            <Text style={styles.questionNumberText}>{index + 1}</Text>
+            <Text style={[styles.questionNumberText, isMobile && styles.questionNumberTextMobile]}>{index + 1}</Text>
           </TouchableOpacity>
         );
       })}
@@ -614,6 +618,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  questionNumberMobile: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    minWidth: 44,
+    minHeight: 44,
+  },
   selectedQuestion: {
     borderWidth: 2,
     borderColor: colors.primary,
@@ -622,6 +633,10 @@ const styles = StyleSheet.create({
   questionNumberText: {
     color: 'white',
     fontSize: 12,
+    fontWeight: 'bold',
+  },
+  questionNumberTextMobile: {
+    fontSize: 14,
     fontWeight: 'bold',
   },
 
@@ -655,37 +670,40 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   optionButton: {
-    padding: 16,
-    borderRadius: 8,
-    borderWidth: 1,
+    padding: 18,
+    borderRadius: 10,
+    borderWidth: 2,
     borderColor: colors.border,
     backgroundColor: colors.surface,
-    marginBottom: 8,
+    marginBottom: 12,
+    minHeight: 56,
   },
   selectedOption: {
-    backgroundColor: colors.primary + '10',
+    backgroundColor: colors.primary + '15',
     borderColor: colors.primary,
+    borderWidth: 2,
   },
   optionContent: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   radioButton: {
-    width: 20,
-    height: 20,
-    borderRadius: 10,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
     borderWidth: 2,
     borderColor: colors.textTertiary,
-    marginRight: 12,
+    marginRight: 14,
   },
   radioButtonSelected: {
     borderColor: colors.primary,
-    borderWidth: 6,
+    borderWidth: 7,
   },
   optionText: {
-    fontSize: 15,
+    fontSize: 16,
     color: colors.text,
     flex: 1,
+    lineHeight: 22,
   },
 
   navigationContainer: {
@@ -704,12 +722,14 @@ const styles = StyleSheet.create({
   navButton: {
     backgroundColor: colors.surface,
     paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 14,
+    borderRadius: 10,
     flex: 1,
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: colors.primary,
+    minHeight: 48,
+    justifyContent: 'center',
   },
   disabledButton: {
     borderColor: colors.border,
@@ -717,38 +737,42 @@ const styles = StyleSheet.create({
   },
   navButtonText: {
     color: colors.primary,
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
   },
   actionButton: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    borderRadius: 10,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.textSecondary,
+    minHeight: 48,
   },
   markedButton: {
     backgroundColor: colors.warning,
   },
   actionButtonText: {
     color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 15,
+    fontWeight: '700',
   },
 
   endTestButton: {
     backgroundColor: colors.error,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    borderRadius: 10,
     alignItems: 'center',
     marginTop: 20,
+    minHeight: 52,
+    justifyContent: 'center',
   },
   endTestButtonText: {
     color: 'white',
-    fontSize: 14,
-    fontWeight: '600',
+    fontSize: 16,
+    fontWeight: '700',
   },
 
   togglePanelBtn: {

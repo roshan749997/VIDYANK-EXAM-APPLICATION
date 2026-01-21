@@ -40,7 +40,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const { width: windowWidth } = useWindowDimensions();
   const isMobile = windowWidth < 480;
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  
+
   // State management
   const [user, setUser] = useState<any>(propUser);
   const [notificationCount, setNotificationCount] = useState(3);
@@ -65,9 +65,15 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
 
   // Handle user profile press
   const handleUserPress = () => {
-    console.log('User icon pressed');
     if (onUserPress) {
       onUserPress();
+    } else {
+      // Navigate to Profile screen by default
+      try {
+        navigation.navigate('Profile');
+      } catch (error) {
+        console.error('Navigation error:', error);
+      }
     }
   };
 
@@ -89,26 +95,26 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         ]}
       >
         {/* Menu button - leftmost position */}
-        <TouchableOpacity onPress={onToggleSidebar} style={styles.sidebarToggle}> 
+        <TouchableOpacity onPress={onToggleSidebar} style={styles.sidebarToggle}>
           <Ionicons name="menu" size={28} color="#000" />
         </TouchableOpacity>
-        
+
         {/* Logo - after menu button */}
         {!isMobile && (
           <Image source={require('../../assets/header-logo.png')}
             style={{ width: 120, height: 48, resizeMode: 'contain', marginLeft: 16, marginRight: 32 }}
           />
         )}
-        
+
         {/* Title */}
         <Text style={[styles.pageTitle, { marginLeft: isMobile ? 16 : 0 }]}>{title}</Text>
         {!isMobile && showSearch && onSearchChange && (
           <View style={styles.searchContainer}>
             <Ionicons name="search-outline" size={20} color="#9ca3af" style={styles.searchIcon} />
-            <TextInput 
-              placeholder="Search..." 
-              style={styles.searchInput} 
-              value={searchQuery} 
+            <TextInput
+              placeholder="Search..."
+              style={styles.searchInput}
+              value={searchQuery}
               onChangeText={onSearchChange}
               placeholderTextColor="#9ca3af"
             />
@@ -116,8 +122,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
         )}
         <View style={styles.headerActions}>
           {!hideNotification && (
-            <TouchableOpacity 
-              style={styles.notificationBtn} 
+            <TouchableOpacity
+              style={styles.notificationBtn}
               onPress={handleNotificationPress}
             >
               <Ionicons name="notifications-outline" size={24} color="#000" />

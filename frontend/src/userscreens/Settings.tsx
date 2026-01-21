@@ -370,16 +370,6 @@ const Settings: React.FC = () => {
       onPress: handleShareProfile,
     },
     {
-      title: 'Rate Us',
-      icon: <Ionicons name="star-outline" size={32} color="#282FFB" style={{ marginRight: 12 }} />,
-      onPress: handleRateUs,
-    },
-    {
-      title: 'Sign Out',
-      icon: <MaterialCommunityIcons name="logout" size={32} color="#282FFB" style={{ marginRight: 12 }} />,
-      onPress: handleSignOut,
-    },
-    {
       title: 'Privacy Policy',
       icon: <Ionicons name="document-text-outline" size={32} color="#282FFB" style={{ marginRight: 12 }} />,
       onPress: handlePrivacyPolicy,
@@ -1070,24 +1060,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FAF9F7',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#282FFB',
-    borderRadius: 14,
-    paddingVertical: 28, // increased from 18
-    paddingHorizontal: 18,
+    borderRadius: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 20,
     minWidth: 220,
+    minHeight: 72,
     marginRight: 0,
     marginBottom: 0,
     marginTop: 0,
     marginLeft: 0,
-    shadowColor: 'transparent',
-    gap: 22, // increased space between icon and text
+    shadowColor: '#282FFB',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    gap: 16,
   },
   profileCardText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#222',
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#1f2937',
+    letterSpacing: 0.3,
   },
 });
 
-export default Settings; 
+export default Settings;
